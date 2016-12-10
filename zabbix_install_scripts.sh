@@ -15,7 +15,7 @@ jkph=/etc/zabbix/scripts/
 UserParameter1=/etc/zabbix/zabbix_agentd.d/
 
 VERSION=${VERSION:-$(awk '{print int(($3~/^[0-9]/?$3:$4))}' /etc/centos-release)}
-[ -z $3 ] && HOSTNAME=${HOSTNAME:-$(hostname)} || HOSTNAME=${3}
+[ -z $3 ] && HOSTNAME=${HOSTNAME:-$pcip} || HOSTNAME=${3}
 [ -z $2 ] && SERVER_IP=${SERVER_IP:-$zzabbix} || SERVER_IP=${2}
 [ -f /tmp/yum.conf ] && :>/tmp/yum.conf
 echo -e "[zabbix]\nname = Zabbix\nbaseurl = http://repo.zabbix.com/zabbix/3.0/rhel/${VERSION}/x86_64\n" >> /tmp/yum.conf
