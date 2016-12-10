@@ -27,7 +27,7 @@ ssh_iptables() {
 }
 
 install_zabbix() {
-        curl -Lk4 https://raw.githubusercontent.com/xiaoyawl/centos_init/master/zabbox_installscripts.sh|bash -x -s net 47.90.33.131
+        curl -Lk4 https://raw.githubusercontent.com/xiaoyawl/centos_init/master/zabbix_install_scripts.sh|bash -x -s net 47.90.33.131
 }
 
 install_docker() {
