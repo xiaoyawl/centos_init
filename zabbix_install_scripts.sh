@@ -15,13 +15,13 @@ jkph=/etc/zabbix/scripts/
 UserParameter1=/etc/zabbix/zabbix_agentd.d/
 
 VERSION=${VERSION:-$(awk '{print int(($3~/^[0-9]/?$3:$4))}' /etc/centos-release)}
-[ -z $3 ] && HOSTNAME=${HOSTNAME:-$pcip} || HOSTNAME=${3}
+[ -z $3 ] && HOSTNAME_ZBX=${HOSTNAME_ZBX:-$pcip} || HOSTNAME_ZBX=${3}
 [ -z $2 ] && SERVER_IP=${SERVER_IP:-$zzabbix} || SERVER_IP=${2}
 [ -f /tmp/yum.conf ] && :>/tmp/yum.conf
 echo -e "[zabbix]\nname = Zabbix\nbaseurl = http://repo.zabbix.com/zabbix/3.0/rhel/${VERSION}/x86_64\n" >> /tmp/yum.conf
 yum -c /tmp/yum.conf install -y zabbix-agent zabbix-sender
 sed -ri "s/^(Server(Active)?=).*/\1${SERVER_IP}/" /etc/zabbix/zabbix_agentd.conf
-sed -ri "s/^(Hostname=).*/\1${HOSTNAME}/g" /etc/zabbix/zabbix_agentd.conf
+sed -ri "s/^(Hostname=).*/\1${HOSTNAME_ZBX}/g" /etc/zabbix/zabbix_agentd.conf
 
 mkdir $jkph -p
 curl -Lks4 https://raw.githubusercontent.com/xiaoyawl/centos_init/master/fdisk/disk.pl -o ${jkph}disk.pl
