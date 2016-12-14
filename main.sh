@@ -34,8 +34,15 @@ install_docker() {
         curl -Lks4 onekey.sh/docker-install|bash -s aufs
 }
 
+setSELinux() {
+        [ -f /etc/sysconfig/selinux ] && { sed -i 's/^SELINUX=.*/#&/;s/^SELINUXTYPE=.*/#&/;/SELINUX=.*/a SELINUX=disabled' /etc/sysconfig/selinux
+                /usr/sbin/setenforce 0; }
+        [ -f /etc/selinux/config ] && { sed -i 's/^SELINUX=.*/#&/;s/^SELINUXTYPE=.*/#&/;/SELINUX=.*/a SELINUX=disabled' /etc/selinux/config
+                /usr/sbin/setenforce 0; }
+}
 disable_ipv6
 ssh_iptables
 install_zabbix
+setSELinux
 iptables -nvxL --lin
 ss -tnl
