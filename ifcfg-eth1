@@ -1,0 +1,11 @@
+TYPE="Ethernet"
+BOOTPROTO="dhcp"
+#BOOTPROTO="static"
+DEFROUTE="no"
+PEERDNS="yes"
+PEERROUTES="yes"
+DEVICE=eth1
+ONBOOT=yes
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME=eth1
