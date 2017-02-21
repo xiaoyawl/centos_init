@@ -1,0 +1,26 @@
+# sample configuration for iptables service
+# you can edit this manually or use system-config-firewall
+# please do not ask us to add additional ports/services to this default configuration
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [31:6680]
+-A INPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p all -m state --state NEW -m recent --name port_scan --update --seconds 1800 --hitcount 10 -j DROP
+-A INPUT -p tcp -m tcp --syn -m multiport --dports 22,22992 -m recent --name ssh --update --seconds 600 --hitcount 4 -j DROP
+-A INPUT -p tcp -m tcp --syn -m multiport --dports 22,22992 -m recent --name ssh --set
+-A INPUT -p tcp --syn -m state --state NEW -m multiport --dports 22,22992,80 -j ACCEPT
+-A INPUT -p all -m recent --name port_scan --set
+#-A INPUT -p tcp -m state --state NEW -m tcp -m multiport --dports 22,22992 -m comment --comment "SSH_PORT" -j ACCEPT
+-A INPUT -s 192.168.0.0/24 -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "Private_SSH_PORT_WAN1" -j ACCEPT
+-A INPUT -s 124.6.140.254/32 -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "MOA_OFFICE_SSH_PORT_WAN1" -j ACCEPT
+-A INPUT -s 116.93.126.165/32 -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "MOA_OFFICE_SSH_PORT_WAN2" -j ACCEPT
+-A INPUT -s 47.90.10.220/32 -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "阿里云跳板_SSH_PORT" -j ACCEPT
+-A INPUT -s 119.28.51.253/32 -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "腾讯云跳板_SSH_PORT" -j ACCEPT
+-A INPUT -s 119.9.95.122/32 -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE跳板_SSH_PORT" -j ACCEPT
+-A INPUT -s 192.168.0.202/32 -p tcp -m tcp -m state --state NEW -m multiport --dports 10050:10053 -m comment --comment "Zabbix_proxy" -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp-host-prohibited
+-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+COMMIT
