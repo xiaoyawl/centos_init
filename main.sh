@@ -31,6 +31,7 @@ install_zabbix() {
 }
 
 install_docker() {
+        if ! rpm -ql epel-release >/dev/null 2>&1;then yum install -y tmux epel-release;fi
         curl -Lks4 onekey.sh/docker-install|bash -s aufs
 }
 
