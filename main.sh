@@ -52,10 +52,17 @@ sync_time() {
     echo -e "\n=======\n" && cat /var/spool/cron/root; }
 }
 
+add_yum_pulgins() {
+    curl -4Lk https://github.com/xiaoyawl/centos_init/raw/master/yum_plugins/axelget.conf > /etc/yum/pluginconf.d/axelget.conf
+    curl -4Lk https://github.com/xiaoyawl/centos_init/raw/master/yum_plugins/axelget.py >/usr/lib/yum-plugins/axelget.py
+}
+
 disable_ipv6
+add_yum_pulgins
+sync_time
 ssh_iptables
 install_zabbix
 setSELinux
 iptables -nvxL --lin
 ss -tnl
-sync_time
+
