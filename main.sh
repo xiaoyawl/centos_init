@@ -49,7 +49,7 @@ sync_time() {
     if grep -q ntpdate /var/spool/cron/root; then sed -i '/ntpdate/d' /var/spool/cron/root; fi
     echo -e "\n*/5 * * * * /usr/sbin/ntpdate -u ntp.dtops.cc >/dev/null 2>&1" >> /var/spool/cron/root
     /usr/sbin/ntpdate -u ntp.dtops.cc
-    echo -e "\n=======\n" && cat /var/spool/cron/root; }
+    echo -e "\n=======\n" && cat /var/spool/cron/root
 }
 
 add_yum_pulgins() {
