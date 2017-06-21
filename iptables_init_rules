@@ -1,0 +1,27 @@
+# Simple static firewall loaded by iptables.service. Replace
+# this with your own custom rules, run lokkit, or switch to 
+# shorewall or firewalld as your needs dictate.
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -s 111.125.72.150/32             -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "MOA_OFFICE_SSH_PORT_WAN1" -j ACCEPT
+-A INPUT -s 116.93.126.165/32             -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "MOA_OFFICE_SSH_PORT_WAN2" -j ACCEPT
+-A INPUT -s 124.6.140.254/32              -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "MOA_OFFICE_SSH_PORT_WAN3" -j ACCEPT
+-A INPUT -s 210.213.83.46/32              -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "MOA_OFFICE_SSH_PORT_WAN4" -j ACCEPT
+-A INPUT -s 47.90.10.220/32               -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "阿里云跳板_SSH_PORT" -j ACCEPT
+-A INPUT -s 119.28.51.253/32              -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "腾讯云跳板_SSH_PORT" -j ACCEPT
+-A INPUT -s 180.150.132.57/32             -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE物理机公网VPN跳板_SSH_PORT" -j ACCEPT
+-A INPUT -s 172.30.0.57/32                -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE物理机内网VPN跳板_SSH_PORT" -j ACCEPT
+-A INPUT -s 172.25.0.1/32                 -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE物理机内网VPN跳板_SSH_PORT" -j ACCEPT
+-A INPUT -s 119.9.95.122/32               -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE云VPN跳板_SSH_PORT" -j ACCEPT
+-A INPUT -s 172.30.0.61/32                -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE物理机内网VPN_SSH_PORT_备用" -j ACCEPT
+-A INPUT -s 172.30.0.63/32                -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "Jumpserver" -j ACCEPT
+-A INPUT -s 47.90.33.131/32               -p tcp -m tcp -m state --state NEW -m multiport --dports 10050:10053 -m comment --comment "ZAABIX_公网_PORT" -j ACCEPT
+-A INPUT -s 172.30.0.62/32                -p tcp -m tcp -m state --state NEW -m multiport --dports 10050:10053 -m comment --comment "Zabbix_proxy" -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp-host-prohibited
+-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+COMMIT
