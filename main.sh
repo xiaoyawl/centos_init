@@ -41,9 +41,21 @@ setSELinux() {
     [ -f /etc/selinux/config ] && { sed -i 's/^SELINUX=.*/#&/;s/^SELINUXTYPE=.*/#&/;/SELINUX=.*/a SELINUX=disabled' /etc/selinux/config; /usr/sbin/setenforce 0; }
 }
 
+sync_time() {
+    if ! ping ntp.dtops.cc -c1 >/dev/null 2>&1; then
+        echo '172.25.0.254   ntp.dtops.cc' >> /etc/hosts
+    fi
+    [ -x /usr/sbin/ntpdate ] || yum install ntpdate -y
+    if grep -q ntpdate /var/spool/cron/root; then sed -i '/ntpdate/d' /var/spool/cron/root; fi
+    echo -e "\n*/5 * * * * /usr/sbin/ntpdate -u ntp.dtops.cc >/dev/null 2>&1" >> /var/spool/cron/root
+    /usr/sbin/ntpdate -u ntp.dtops.cc
+    echo -e "\n=======\n" && cat /var/spool/cron/root; }
+}
+
 disable_ipv6
 ssh_iptables
 install_zabbix
 setSELinux
 iptables -nvxL --lin
 ss -tnl
+sync_time
