@@ -7,7 +7,7 @@ plugin_type = (TYPE_CORE, TYPE_INTERACTIVE)
 
 enablesize=300000
 trymirrornum=-1
-maxconn=10
+maxconn=20
 httpdownloadonly=False
 cleanOnException=0
 
