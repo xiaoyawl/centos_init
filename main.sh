@@ -21,7 +21,7 @@ disable_ipv6() {
 ssh_iptables() {
         sed -ri 's/^#?(Port)\s{1,}.*/\1 22992/' /etc/ssh/sshd_config
         curl -Lks4 onekey.sh/friewall2iptables|bash
-        curl -Lks4 onekey.sh/dt_iptables_init > /etc/sysconfig/iptables
+        curl -Lks4 https://raw.githubusercontent.com/xiaoyawl/centos_init/master/iptables_init_rules > /etc/sysconfig/iptables
         systemctl restart sshd.service
         service iptables restart
 }
