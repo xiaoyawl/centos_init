@@ -53,6 +53,8 @@ sync_time() {
 }
 
 add_yum_pulgins() {
+    yum install epel-release -y
+    if ! which axel 2>/dev/null; then yum install axel -y;fi
     curl -4Lk https://github.com/xiaoyawl/centos_init/raw/master/yum_plugins/axelget.conf > /etc/yum/pluginconf.d/axelget.conf
     curl -4Lk https://github.com/xiaoyawl/centos_init/raw/master/yum_plugins/axelget.py >/usr/lib/yum-plugins/axelget.py
 }
