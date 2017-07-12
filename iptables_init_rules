@@ -2,7 +2,7 @@
 # this with your own custom rules, run lokkit, or switch to 
 # shorewall or firewalld as your needs dictate.
 *filter
-:INPUT ACCEPT [0:0]
+:INPUT DROP [0:0]
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
