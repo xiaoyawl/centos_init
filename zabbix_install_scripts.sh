@@ -29,5 +29,11 @@ curl -Lks4 https://raw.githubusercontent.com/xiaoyawl/centos_init/master/fdisk/d
 chmod 755 /etc/zabbix/scripts/disk.pl
 (crontab -l; echo -e "*/1 * * * * /usr/sbin/ss  -tan|awk 'NR>1{++S[\$1]}END{for (a in S) print a,S[a]}' > /tmp/tcp-status.txt\n*/1 * * * * /usr/sbin/ss -o state established '( dport = :http or sport = :http )' |grep -v Netid > /tmp/httpNUB.txt") | crontab -
 
+echo 'zabbix ALL=(root)NOPASSWD:/usr/bin/cksum /root/.ssh/authorized_keys' >>/etc/sudoers
+echo "UserParameter=authorized_keys,sudo /usr/bin/cksum /root/.ssh/authorized_keys|awk '{print \$1}'" >> /etc/zabbix/zabbix_agentd.conf
+echo "UserParameter=iptables_lins,/usr/bin/sudo iptables -S |md5sum|awk '{print \$1}'" >> /etc/zabbix/zabbix_agentd.conf 
+echo 'zabbix ALL=(root)NOPASSWD:/usr/sbin/iptables,/usr/bin/cksum /etc/sysconfig/iptables' >>/etc/sudoers 
+echo "UserParameter=iptables_file,/usr/bin/sudo /usr/bin/cksum /etc/sysconfig/iptables|awk '{print \$1}'"  >>/etc/zabbix/zabbix_agentd.conf
+
 [ "${VERSION}" = "7" ] && { systemctl enable zabbix-agent.service && systemctl start zabbix-agent.service; }
 [ "${VERSION}" = "6" ] && { chkconfig zabbix-agent on && service zabbix-agent start; }
