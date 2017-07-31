@@ -36,6 +36,16 @@ change_kernel() {
 
 [ "$1" = "aufs" ] && change_kernel
 
+if ! grep -q net.bridge.bridge-nf-call-iptables /etc/sysctl.conf; then
+	cat >> /etc/sysctl.conf <<-EOF
+
+		net.bridge.bridge-nf-call-ip6tables = 1
+		net.bridge.bridge-nf-call-iptables = 1
+		net.bridge.bridge-nf-call-arptables = 1
+	EOF
+	sysctl -p 2>/dev/null| grep bridge
+fi
+
 if ! which docker >/dev/null 2>&1; then curl -Lk get.docker.com|bash; fi
 if ! which docker-compose >/dev/null 2>&1; then curl -Lk onekey.sh/docker-compose|bash; fi
 
