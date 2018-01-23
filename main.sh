@@ -22,8 +22,10 @@ ssh_iptables() {
     sed -ri 's/^#?(Port)\s{1,}.*/\1 22992/' /etc/ssh/sshd_config
     curl -Lks4 https://raw.githubusercontent.com/xiaoyawl/centos_init/master/friewall2iptables.sh|bash
     curl -Lks4 https://raw.githubusercontent.com/xiaoyawl/centos_init/master/iptables_init_rules > /etc/sysconfig/iptables
-    systemctl restart sshd.service
-    service iptables restart
+    if [ $1 == "publicnet" ]; then
+        sed -i '10s/$/\n-A INPUT                                  -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "SSH_PORT" -j ACCEPT/' /etc/sysconfig/iptables
+    fi    
+    systemctl restart sshd.service iptables.service
 }
 
 install_zabbix() {
@@ -33,7 +35,7 @@ install_zabbix() {
 install_docker() {
     yum install -y epel-release && yum install -y tmux
     #if ! rpm -ql epel-release >/dev/null 2>&1;then yum install -y tmux epel-release; fi
-    curl -Lks4 https://raw.githubusercontent.com/xiaoyawl/centos_init/master/docker-install.sh|bash -s aufs
+    curl -Lks4 https://raw.githubusercontent.com/xiaoyawl/centos_init/master/docker-install.sh|bash -s $1        
 }
 
 setSELinux() {
@@ -62,9 +64,10 @@ add_yum_pulgins() {
 disable_ipv6
 add_yum_pulgins
 sync_time
-ssh_iptables
+ssh_iptables $1
 install_zabbix
 setSELinux
+install_docker $2
 iptables -nvxL --lin
 ss -tnl
 
