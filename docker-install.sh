@@ -39,10 +39,11 @@ change_kernel() {
 		fi
 	fi
 	sed -i '/\[main\]/a exclude=kernel*' /etc/yum.conf
+	echo installd > /tmp/kernel
 	clear && echo -e "\033[45;37;1mSystem will be reboot\033[39;49;0m" && sleep 5 && reboot
 }
 
-change_kernel $1
+if ! grep -q installd /tmp/kernel; then change_kernel $1; fi
 
 if ! grep -q net.bridge.bridge-nf-call-iptables /etc/sysctl.conf; then
 	cat >> /etc/sysctl.conf <<-EOF
