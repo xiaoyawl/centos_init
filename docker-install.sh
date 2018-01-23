@@ -11,8 +11,8 @@ change_kernel() {
 	yum clean all && yum makecache
 	yum -y remove kernel-headers kernel-tools kernel-tools-libs
 	if [ $1 == "aufs" ]; then
-	    [ -d "/usr/src/kernels/`uname -r`/fs/aufs" ] && return
-	    cat >/etc/yum.repos.d/kernel-ml-aufs.repo <<-EOF
+		[ -d "/usr/src/kernels/`uname -r`/fs/aufs" ] && return
+		cat >/etc/yum.repos.d/kernel-ml-aufs.repo <<-EOF
 			[kernel-ml-aufs]
 			name=RHEL AUFS Kernel - Mainline
 			baseurl=http://mirrors.dtops.cc/kernel_ml_aufs/\$releasever/\$basearch/
@@ -20,13 +20,13 @@ change_kernel() {
 			enabled=1
 			gpgcheck=0
 		EOF
-	    #curl -Lk http://mirrors.dwhd.org/kernel-ml-aufs/kernel-ml-auf.repo >/etc/yum.repos.d/kernel-ml-aufs.repo
-	    yum -y install kernel-ml-aufs kernel-ml-aufs-headers kernel-ml-aufs-devel kernel-ml-aufs-tools-libs-devel perf python-perf
+		#curl -Lk http://mirrors.dwhd.org/kernel-ml-aufs/kernel-ml-auf.repo >/etc/yum.repos.d/kernel-ml-aufs.repo
+		yum -y install kernel-ml-aufs kernel-ml-aufs-headers kernel-ml-aufs-devel kernel-ml-aufs-tools-libs-devel perf python-perf
 	else
 		yum install -y http://elrepo.org/linux/kernel/el7/x86_64/RPMS/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
 		yum --enablerepo=elrepo-kernel install kernel-ml kernel-ml-headers kernel-ml-devel kernel-ml-tools-libs-devel perf python-perf
 	fi
-	    
+
 	if [ "$(awk '{print int(($3~/^[0-9]/?$3:$4))}' /etc/centos-release)" == "7" ]; then
 		grub2-set-default 0
 	elif [ "$(awk '{print int(($3~/^[0-9]/?$3:$4))}' /etc/centos-release)" == "6" ]; then
