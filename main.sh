@@ -27,6 +27,7 @@ ssh_iptables() {
         sed -ri '/(172.(30|25)|47.90|119.28.51.253|119.9.95.122|MOA)/d' /etc/sysconfig/iptables
     fi    
     systemctl restart sshd.service iptables.service
+    [[ "$(awk '/^UseDNS/{print $2}' /etc/ssh/sshd_config)" =~ ^[nN][oO]$ ]] || { echo 'UseDNS no' >> /etc/ssh/sshd_config && service sshd restart; }
 }
 
 install_zabbix() {
