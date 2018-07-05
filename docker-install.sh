@@ -40,7 +40,6 @@ change_kernel() {
 	fi
 	sed -i '/\[main\]/a exclude=kernel*' /etc/yum.conf
 	echo installd > /tmp/kernel
-	clear && echo -e "\033[45;37;1mSystem will be reboot\033[39;49;0m" && sleep 5 && reboot
 }
 
 if ! grep -q installd /tmp/kernel; then change_kernel $1; fi
@@ -60,3 +59,5 @@ if ! which docker-compose >/dev/null 2>&1; then curl -Lk onekey.sh/docker-compos
 [ "$(awk '{print int(($3~/^[0-9]/?$3:$4))}' /etc/centos-release)" == "7" ] && \
 	{ systemctl enable docker && systemctl start docker; } || \
 	{ chkconfig docker on && service docker start; }
+
+clear && echo -e "\033[45;37;1mSystem will be reboot\033[39;49;0m" && sleep 5 && reboot
