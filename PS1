@@ -1,4 +1,7 @@
 
+unset MAILCHECK
+[ -f ~/.bashrc ] && . ~/.bashrc
+alais vi='vim'
 
 NodeID=`ip a| awk '$1=="inet" && $2!~"^127"{print $2;exit}'|sed 's/\./_/g;s/\/.*$//'`
 for i in static pretty transient; do hostnamectl set-hostname DS-VM-Node${NodeID}.cluster.com --$i; done
