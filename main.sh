@@ -63,6 +63,11 @@ add_yum_pulgins() {
     curl -4Lk https://github.com/xiaoyawl/centos_init/raw/master/yum_plugins/axelget.py >/usr/lib/yum-plugins/axelget.py
 }
 
+add_speedtest() {
+    curl -Lks 'https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py' > /usr/bin/speedtest-cli
+    chmod +x /usr/bin/speedtest-cli
+}
+
 disable_ipv6
 add_yum_pulgins
 sync_time
