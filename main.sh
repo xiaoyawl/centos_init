@@ -64,11 +64,12 @@ add_yum_pulgins() {
 }
 
 add_speedtest() {
-    curl -Lks 'https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py' > /usr/bin/speedtest-cli
+    curl -Lk 'https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py' > /usr/bin/speedtest-cli
     chmod +x /usr/bin/speedtest-cli
 }
 
 disable_ipv6
+add_speedtest
 add_yum_pulgins
 sync_time
 ssh_iptables $1
