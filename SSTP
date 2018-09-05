@@ -1,0 +1,15 @@
+#!/bin/bash
+SSTPC(){ 
+        sstpc --log-stderr --cert-warn --user $1 --password $2 $3 usepeerdns require-mschap-v2 noauth noipdefault defaultroute refuse-eap noccp
+}
+
+if [ -n $1 ] && [ -n $2 ] && [ -n $3 ];then
+        clear && echo -e "\n\nStart STTP connection......"
+        SSTPC $1 $2 $3
+else
+        read -p "Please input sstp Server: " sstp_server
+        read -p "Please input sstp UserName: " sstp_user
+        read -p "Please input sstp PassWord: " -s sstp_pass
+        clear && echo -e "\n\nStart STTP connection......"
+        SSTPC $sstp_user $sstp_pass $sstp_server
+fi
