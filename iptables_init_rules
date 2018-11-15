@@ -17,7 +17,7 @@
 -A INPUT -s 180.150.132.57/32             -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE物理机公网VPN跳板_SSH_PORT" -j ACCEPT
 -A INPUT -s 172.30.0.57/32                -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE物理机内网VPN跳板_SSH_PORT" -j ACCEPT
 -A INPUT -s 172.25.0.1/32                 -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE物理机内网VPN跳板_SSH_PORT" -j ACCEPT
--A INPUT -s 119.9.95.122/32               -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE云VPN跳板_SSH_PORT" -j ACCEPT
+-A INPUT -s 119.9.106.164/32               -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE云VPN跳板_SSH_PORT" -j ACCEPT
 -A INPUT -s 172.30.0.61/32                -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE物理机内网VPN_SSH_PORT_备用" -j ACCEPT
 -A INPUT -s 172.30.0.63/32                -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "Jumpserver" -j ACCEPT
 -A INPUT -s 47.90.33.131/32               -p tcp -m tcp -m state --state NEW -m multiport --dports 10050:10053 -m comment --comment "ZAABIX_公网_PORT" -j ACCEPT
