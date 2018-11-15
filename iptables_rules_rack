@@ -18,7 +18,7 @@
 -A INPUT -s 124.6.140.254/32              -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "MOA_OFFICE_SSH_PORT_WAN3" -j ACCEPT
 -A INPUT -s 210.213.83.46/32              -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "MOA_OFFICE_SSH_PORT_WAN4" -j ACCEPT
 -A INPUT -s 180.150.132.57/32             -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE物理机公网VPN跳板_SSH_PORT" -j ACCEPT
--A INPUT -s 119.9.95.122/32               -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE跳板_SSH_PORT" -j ACCEPT
+-A INPUT -s 119.9.106.164/32               -p tcp -m tcp -m state --state NEW -m multiport --dports 22,22992 -m comment --comment "RACKSPACE跳板_SSH_PORT" -j ACCEPT
 -A INPUT -s 180.150.154.113/32            -p tcp -m state --state NEW -m tcp -m multiport --dports 22,22992 -m comment --comment "CMDB-SERVER" -j ACCEPT
 -A INPUT -s 172.30.0.56/32                -p tcp -m state --state NEW -m tcp -m multiport --dports 22,22992 -m comment --comment "RACK香港_Anyconnect_SSH_PORT" -j ACCEPT
 -A INPUT -s 172.30.0.57/32                -p tcp -m state --state NEW -m tcp -m multiport --dports 22,22992 -m comment --comment "RACK香港_Anyconnect_SSH_PORT" -j ACCEPT
