@@ -1,0 +1,63 @@
+[Unit]
+Description=CrateDB Server
+Documentation=https://crate.io/docs
+After=network.target
+
+[Service]
+Type=simple
+User=crate
+Group=crate
+WorkingDirectory=/data/CrateDB
+
+# default environment variables
+Environment="CRATE_HOME=/data/CrateDB"
+Environment="CRATE_PATH_CONF=/data/CrateDB/config"
+Environment="CRATE_PATH_LOG=/data/CrateDB/logs"
+Environment="CRATE_GC_LOG_DIR=/var/log/crate"
+Environment="CRATE_HEAP_DUMP_PATH=/var/lib/crate"
+# load environment
+EnvironmentFile=-/etc/sysconfig/crate
+
+ExecStart=/data/CrateDB/bin/crate \
+    -Cpath.conf=${CRATE_PATH_CONF} \
+    -Cpath.logs=${CRATE_PATH_LOG}
+
+StandardOutput=journal
+StandardError=journal
+
+# Disable timeout logic and wait until process is stopped
+TimeoutStopSec=0
+
+# SIGTERM signal is used to stop the Java process
+KillSignal=SIGTERM
+
+# Send the signal only to the JVM rather than its control group
+KillMode=process
+
+# Java process is never killed
+SendSIGKILL=no
+
+# When a JVM receives a SIGTERM signal it exits with code 143
+SuccessExitStatus=143 SIGTERM SIGKILL
+
+
+# Override these settings with a file called
+# /etc/systemd/system/crate.service.d/crate.conf and specify any changes
+
+# Specifies the maximum number of bytes of memory that may be locked into RAM
+LimitMEMLOCK=infinity
+
+# Specifies the maximum file descriptor number that can be opened by this process
+LimitNOFILE=65536
+
+# Specifies the maximum number of processes
+LimitNPROC=4096
+
+# Specifies the maximum file size
+LimitFSIZE=infinity
+
+# Specifies limit of virtual memory that can be used
+LimitAS=infinity
+
+[Install]
+WantedBy=multi-user.target
