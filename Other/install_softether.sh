@@ -20,7 +20,7 @@ echo -e "Download URL: \n    ${FileUrl}"
 sleep 3
 
 curl -Lk ${FileUrl}|tar xz -C ./ --strip-components=1
-make
+yes 1 | make
 chmod 600 *
 chmod 700 vpncmd vpnserver
 echo 'export PATH=/usr/local/softether:$PATH' > /etc/profile.d/softether.sh
