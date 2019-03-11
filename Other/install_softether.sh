@@ -12,7 +12,7 @@ cd /usr/local/softether/
 
 GITHUB_URL="https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases"
 FileName="`curl -Lks ${GITHUB_URL}/latest|awk '/<title>Release/{print $2;exit}'`"
-FileUrl="https://github.com`curl -Lks ${GITHUB_URL}/latest| awk -F'"' '/href=.*softether-vpnbridge-'"$FileName"'.*linux-x64-64bit.tar.gz/{print $2}'`"
+FileUrl="https://github.com`curl -Lks ${GITHUB_URL}/latest| awk -F'"' '/href=.*softether-vpnserver-'"$FileName"'.*linux-x64-64bit.tar.gz/{print $2}'`"
 
 clear
 echo "Start download SoftEtherVPN Server"
