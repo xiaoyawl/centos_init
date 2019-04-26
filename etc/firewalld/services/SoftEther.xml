@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <service>
+  <port port="80" protocol="tcp"/>
+  <port port="443" protocol="tcp"/>
+  <port port="992" protocol="tcp"/>
+  <port port="1194" protocol="tcp"/>
+  <port port="5555" protocol="tcp"/>
+  <port port="500" protocol="udp"/>
+  <port port="4500" protocol="udp"/>
+  <port port="1194" protocol="udp"/>
+ </service>
