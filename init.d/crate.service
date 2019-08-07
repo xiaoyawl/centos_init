@@ -14,7 +14,7 @@ Environment="CRATE_HOME=/data/CrateDB"
 Environment="CRATE_PATH_CONF=/data/CrateDB/config"
 Environment="CRATE_PATH_LOG=/data/CrateDB/logs"
 Environment="CRATE_GC_LOG_DIR=/var/log/crate"
-Environment="CRATE_HEAP_DUMP_PATH=/var/lib/crate"
+Environment="CRATE_HEAP_DUMP_PATH=/data/CrateDB/lib/crate"
 # load environment
 EnvironmentFile=-/etc/sysconfig/crate
 
