@@ -11,7 +11,7 @@ mkdir -p /usr/local/softether /scripts
 cd /usr/local/softether/
 
 GITHUB_URL="https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases"
-#FileName="`curl -Lks ${GITHUB_URL}/latest|awk '/<title>Release/{print $2;exit}'`"
+FileName="`curl -Lks ${GITHUB_URL}/latest|awk '/<title>Release/{print $2;exit}'`"
 FileUrl="$(curl -Lks "$GITHUB_URL"/latest|awk -F'"' '/'"$FileName"'\.tar\.gz/{print "https://github.com"$2}')"
 
 
