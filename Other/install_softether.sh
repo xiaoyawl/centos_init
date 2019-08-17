@@ -22,7 +22,10 @@ echo -e "Download URL: \n    ${FileUrl}"
 sleep 3
 
 curl -Lk ${FileUrl}|tar xz -C ./ --strip-components=1
+yum install -y readline-devel openssl-devel
+./configure
 yes 1 | make
+make install
 chmod 600 *
 chmod 700 vpncmd vpnserver
 echo 'export PATH=/usr/local/softether:$PATH' > /etc/profile.d/softether.sh
