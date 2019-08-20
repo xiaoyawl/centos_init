@@ -10,11 +10,13 @@
 mkdir -p /usr/local/softether /scripts
 cd /usr/local/softether/
 
-GITHUB_URL="https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases"
-FileName="`curl -Lks ${GITHUB_URL}/latest|awk '/<title>Release/{print $2;exit}'`"
-FileUrl="$(curl -Lks "$GITHUB_URL"/latest|awk -F'"' '/'"$FileName"'\.tar\.gz/{print "https://github.com"$2}')"
-
-
+if [[ "$1" =~ ^[Nn][Ee][Ww]$ ]]; then
+    GITHUB_URL="https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases"
+    FileName="`curl -Lks ${GITHUB_URL}/latest|awk '/<title>Release/{print $2;exit}'`"
+    FileUrl="$(curl -Lks "$GITHUB_URL"/latest|awk -F'"' '/'"$FileName"'\.tar\.gz/{print "https://github.com"$2}')"
+else
+    FileUrl="https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases/download/v4.28-9669-beta/softether-src-v4.28-9669-beta.tar.gz"
+fi
 
 clear
 echo "Start download SoftEtherVPN Server"
