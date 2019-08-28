@@ -10,6 +10,8 @@
 change_kernel() {
 	yum clean all
 	yum -y remove kernel-headers kernel-tools kernel-tools-libs
+	yum install -y http://elrepo.org/linux/kernel/el7/x86_64/RPMS/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
+	yum makecache
 	if [ $1 == "aufs" ]; then
 		[ -d "/usr/src/kernels/`uname -r`/fs/aufs" ] && return
 		cat >/etc/yum.repos.d/kernel-ml-aufs.repo <<-EOF
@@ -21,12 +23,17 @@ change_kernel() {
 			gpgcheck=0
 		EOF
 		#curl -Lk http://mirrors.dwhd.org/kernel-ml-aufs/kernel-ml-auf.repo >/etc/yum.repos.d/kernel-ml-aufs.repo
-		yum makecache
-		yum -y install kernel-ml-aufs kernel-ml-aufs-headers kernel-ml-aufs-devel kernel-ml-aufs-tools-libs-devel perf python-perf
+		if [ $2 == "ali" ]; then
+			yum --enablerepo=elrepo-kernel install -y kernel-lt-aufs kernel-lt-aufs-headers kernel-lt-aufs-devel kernel-lt-aufs-tools-libs-devel perf python-perf
+		else
+			yum --enablerepo=elrepo-kernel install -y kernel-ml kernel-ml-devel kernel-ml-doc kernel-ml-headers kernel-ml-tools kernel-ml-tools-libs kernel-ml-tools-libs-devel perf python-perf
+		fi
 	else
-		yum install -y http://elrepo.org/linux/kernel/el7/x86_64/RPMS/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
-		yum makecache
-		yum --enablerepo=elrepo-kernel install -y kernel-ml kernel-ml-devel kernel-ml-doc kernel-ml-headers kernel-ml-tools kernel-ml-tools-libs kernel-ml-tools-libs-devel perf python-perf
+		if [ $2 == "ali" ]; then
+			yum --enablerepo=elrepo-kernel install -y kernel-lt-aufs kernel-lt-aufs-headers kernel-lt-aufs-devel kernel-lt-aufs-tools-libs-devel perf python-perf
+		else
+			yum --enablerepo=elrepo-kernel install -y kernel-ml kernel-ml-devel kernel-ml-doc kernel-ml-headers kernel-ml-tools kernel-ml-tools-libs kernel-ml-tools-libs-devel perf python-perf
+		fi
 	fi
 
 	if [ "$(awk '{print int(($3~/^[0-9]/?$3:$4))}' /etc/centos-release)" == "7" ]; then
