@@ -75,7 +75,7 @@ sync_time
 ssh_iptables $1
 install_zabbix
 setSELinux
-install_docker $2
+install_docker $2 $3
 iptables -nvxL --lin
 ss -tnl
 
