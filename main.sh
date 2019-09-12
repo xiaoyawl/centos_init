@@ -37,7 +37,7 @@ install_zabbix() {
 install_docker() {
     yum install -y epel-release && yum install -y tmux
     #if ! rpm -ql epel-release >/dev/null 2>&1;then yum install -y tmux epel-release; fi
-    curl -Lks4 https://raw.githubusercontent.com/xiaoyawl/centos_init/master/docker-install.sh|bash -s $1        
+    curl -Lks4 https://raw.githubusercontent.com/xiaoyawl/centos_init/master/docker-install.sh|bash -s $1 $2
 }
 
 setSELinux() {
