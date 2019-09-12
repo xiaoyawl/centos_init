@@ -22,18 +22,12 @@ change_kernel() {
 			enabled=1
 			gpgcheck=0
 		EOF
-		#curl -Lk http://mirrors.dwhd.org/kernel-ml-aufs/kernel-ml-auf.repo >/etc/yum.repos.d/kernel-ml-aufs.repo
-		if [ $2 == "ali" ]; then
-			yum --enablerepo=elrepo-kernel install -y kernel-lt-aufs kernel-lt-aufs-headers kernel-lt-aufs-devel kernel-lt-aufs-tools-libs-devel perf python-perf
-		else
-			yum --enablerepo=elrepo-kernel install -y kernel-ml kernel-ml-devel kernel-ml-doc kernel-ml-headers kernel-ml-tools kernel-ml-tools-libs kernel-ml-tools-libs-devel perf python-perf
-		fi
+	fi
+	#curl -Lk http://mirrors.dwhd.org/kernel-ml-aufs/kernel-ml-auf.repo >/etc/yum.repos.d/kernel-ml-aufs.repo
+	if [ $2 == "ali" ]; then
+		yum --enablerepo=elrepo-kernel install kernel-lt kernel-lt-devel kernel-lt-doc kernel-lt-headers kernel-lt-tools kernel-lt-tools-libs kernel-lt-tools-libs-devel perf python-perf
 	else
-		if [ $2 == "ali" ]; then
-			yum --enablerepo=elrepo-kernel install -y kernel-lt-aufs kernel-lt-aufs-headers kernel-lt-aufs-devel kernel-lt-aufs-tools-libs-devel perf python-perf
-		else
-			yum --enablerepo=elrepo-kernel install -y kernel-ml kernel-ml-devel kernel-ml-doc kernel-ml-headers kernel-ml-tools kernel-ml-tools-libs kernel-ml-tools-libs-devel perf python-perf
-		fi
+		yum --enablerepo=elrepo-kernel install -y kernel-ml kernel-ml-devel kernel-ml-doc kernel-ml-headers kernel-ml-tools kernel-ml-tools-libs kernel-ml-tools-libs-devel perf python-perf
 	fi
 
 	if [ "$(awk '{print int(($3~/^[0-9]/?$3:$4))}' /etc/centos-release)" == "7" ]; then
