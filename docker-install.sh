@@ -43,7 +43,7 @@ change_kernel() {
 	echo installd > /tmp/kernel
 }
 
-if ! grep -q installd /tmp/kernel; then change_kernel $1; fi
+if ! grep -q installd /tmp/kernel; then change_kernel $1 $2; fi
 
 if ! grep -q net.bridge.bridge-nf-call-iptables /etc/sysctl.conf; then
 	cat >> /etc/sysctl.conf <<-EOF
