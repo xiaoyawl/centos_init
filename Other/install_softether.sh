@@ -15,7 +15,8 @@ if [[ "$1" =~ ^[Nn][Ee][Ww]$ ]]; then
     FileName="`curl -Lks ${GITHUB_URL}/latest|awk '/<title>Release/{print $2;exit}'`"
     FileUrl="$(curl -Lks "$GITHUB_URL"/latest|awk -F'"' '/'"$FileName"'\.tar\.gz/{print "https://github.com"$2}')"
 else
-    FileUrl="https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases/download/v4.28-9669-beta/softether-src-v4.28-9669-beta.tar.gz"
+    #FileUrl="https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases/download/v4.28-9669-beta/softether-src-v4.28-9669-beta.tar.gz"
+    FileUrl="https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases/download/v4.41-9782-beta/softether-src-v4.41-9782-beta.tar.gz"
 fi
 
 clear
